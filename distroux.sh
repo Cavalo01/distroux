@@ -1,4 +1,5 @@
 pkg install proot &&
+
 banner='
 ╔═══╦══╦═══╦════╦═══╦═══╦╗─╔╦═╗╔═╗
 ╚╗╔╗╠╣╠╣╔═╗║╔╗╔╗║╔═╗║╔═╗║║─║╠╗╚╝╔╝
@@ -11,7 +12,11 @@ echo "$banner"
 read -p "Qual distro você quer usar? " distro
 
 if proot-distro login "$distro"; then
-echo 
+  echo "Distro $distro iniciada com sucesso."
 else
-    proot-distro install "$distro" && proot-distro login "$distro"
+  if [[ $? -eq 3 ]]; then
+    echo 
+  else
+    proot-distro install $distro && proot-distro login $distro
+  fi
 fi
